@@ -1,0 +1,23 @@
+{ lib, config }:
+
+let
+  renderKeybind =
+    {
+      modifiers,
+      key,
+      action,
+      type,
+    }:
+    "${builtins.concatStringsSep " " modifiers}, ${key}, exec, ${action}";
+  keybindsByType = keybindType: builtins.filter ({ type, ... }: type == keybindType);
+in
+{
+  options.key.hyprland.enable = lib.mkEnableOption "Hyprland keybinds";
+
+  config = lib.mkIf config.key.hyprland.enable {
+    wayland.windowManager.hyprland.settings = {
+      bind = map renderKeybind (keybindsByType "PRESS" config.keybinds);
+      binde = map renderKeybind (keybindsByType "HOLD" config.keybinds);
+    };
+  };
+}
