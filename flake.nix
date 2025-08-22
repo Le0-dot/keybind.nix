@@ -3,12 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -16,7 +10,6 @@
     {
       self,
       nixpkgs,
-      home-manager,
       flake-utils,
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -25,6 +18,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
+        homeModules.key = import ./hm { inherit (nixpkgs) lib; };
         formatter = pkgs.treefmt.withConfig {
           runtimeInputs = with pkgs; [
             nixfmt
