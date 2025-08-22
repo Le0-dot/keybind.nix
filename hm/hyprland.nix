@@ -1,4 +1,4 @@
-{ lib, config }:
+{ lib, config, ... }:
 
 let
   renderKeybind =
@@ -16,8 +16,8 @@ in
 
   config = lib.mkIf config.key.hyprland.enable {
     wayland.windowManager.hyprland.settings = {
-      bind = map renderKeybind (keybindsByType "PRESS" config.keybinds);
-      binde = map renderKeybind (keybindsByType "HOLD" config.keybinds);
+      bind = map renderKeybind (keybindsByType "PRESS" config.keybind.binds);
+      binde = map renderKeybind (keybindsByType "HOLD" config.keybind.binds);
     };
   };
 }

@@ -1,3 +1,5 @@
+{ ... }:
+
 {
   imports = [
     ./keybinds.nix

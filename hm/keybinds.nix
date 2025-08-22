@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, ... }:
 
 let
   keybind = lib.types.submodule {
@@ -35,7 +35,7 @@ let
   };
 in
 {
-  options.key.binds = lib.mkOption {
+  options.keybind.binds = lib.mkOption {
     type = lib.types.listOf keybind;
     default = [ ];
     example = [

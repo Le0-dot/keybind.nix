@@ -18,7 +18,6 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        homeModules.key = import ./hm { inherit (nixpkgs) lib; };
         formatter = pkgs.treefmt.withConfig {
           runtimeInputs = with pkgs; [
             nixfmt
@@ -28,5 +27,8 @@
           settings = pkgs.lib.importTOML ./treefmt.toml;
         };
       }
-    );
+    )
+    // {
+      homeModules.keybind = import ./hm { inherit (nixpkgs) lib; };
+    };
 }
